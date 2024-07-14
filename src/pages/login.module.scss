@@ -1,0 +1,33 @@
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--primary-accent-color);
+}
+
+.form-container {
+  width: 500px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  gap: 10px;
+  border-radius: 8px; /* Optional: add some border radius for better visual */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-details-container {
+  display: flex;
+  align-items: center;
+}
+
+.app-details-container h1 {
+  font-size: 30px;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}

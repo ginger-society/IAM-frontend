@@ -1,0 +1,4 @@
+dir = "src/services"
+lang = "TS"
+repo = "ginger-society/metadata-repo"
+services = ["IAMService"]
