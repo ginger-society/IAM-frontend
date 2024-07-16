@@ -11,7 +11,7 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--secondary-bg-color);
   gap: 10px;
   border-radius: 8px; /* Optional: add some border radius for better visual */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -30,4 +30,12 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.secondary-action-group {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
 }

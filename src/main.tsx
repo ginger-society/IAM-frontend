@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import "../node_modules/@ginger-society/ginger-ui/dist/esm/index.css";
@@ -6,6 +5,7 @@ import "./index.css";
 
 import { AuthProvider } from "./shared/AuthContext";
 import router from "./shared/router";
+import { SnackbarProvider } from "@ginger-society/ginger-ui";
 
 const rootElement = document.querySelector('[data-js="root"]') as HTMLElement;
 
@@ -15,9 +15,9 @@ if (!rootElement) {
 
 const root = createRoot(rootElement);
 root.render(
-  <StrictMode>
-    <AuthProvider>
+  <AuthProvider>
+    <SnackbarProvider>
       <RouterProvider router={router} />
-    </AuthProvider>
-  </StrictMode>
+    </SnackbarProvider>
+  </AuthProvider>
 );

@@ -7,24 +7,26 @@ import {
   Text,
   TextSize,
   TextColor,
+  useSnackbar,
+  SnackbarTimer,
 } from "@ginger-society/ginger-ui";
 import styles from "./login.module.scss";
 
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { IAMService } from "@/services";
 import { AppResponse } from "@/services/IAMService_client";
+import { IAMService } from "@/services";
 
-const LoginPage = () => {
+const RegisterationPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const { user } = useContext(AuthContext);
   const [error, setError] = useState<string>();
   const { app_id } = useParams<{ app_id: string }>();
-
-  const [loading, setLoading] = useState<boolean>(false);
-
   const [appData, setAppData] = useState<AppResponse>();
+
+  const { show } = useSnackbar();
 
   useEffect(() => {
     const fetchAppData = async () => {
@@ -40,7 +42,27 @@ const LoginPage = () => {
   }, [app_id]);
 
   const signUp = async () => {
-    router.navigate(`/${app_id}/register`);
+    if (password !== rePassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    try {
+      await IAMService.identityRegister({
+        registerRequest: {
+          email,
+          password,
+        },
+      });
+      setEmail("");
+      setPassword("");
+      setRePassword("");
+      show("Account created successfully , Please login", SnackbarTimer.Medium);
+      setTimeout(() => {
+        router.navigate(`/${app_id}/login`);
+      }, SnackbarTimer.Medium);
+    } catch (err) {
+      setError("Registration failed");
+    }
   };
 
   useEffect(() => {
@@ -49,22 +71,8 @@ const LoginPage = () => {
     }
   }, [user]);
 
-  const signIn = async () => {
-    if (!app_id) {
-      return;
-    }
-    setLoading(true);
-    const tokens = await IAMService.identityLogin({
-      loginRequest: {
-        email: email,
-        password: password,
-        clientId: app_id,
-      },
-    });
-
-    setLoading(false);
-
-    window.location.href = `${appData?.appUrl}/#/handle-auth/${tokens.accessToken}/${tokens.refreshToken}`;
+  const signIn = () => {
+    router.navigate(`/${app_id}/register/login`);
   };
 
   const resetPassword = () => {
@@ -78,28 +86,39 @@ const LoginPage = () => {
           <img width={200} src={appData?.logoUrl} />
           <Text size={TextSize.Large}>{appData?.name}</Text>
         </div>
-        <Input label="Email" onChange={(e) => setEmail(e.target.value)} />
+        <Input
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <Input
           label="Password"
           type="password"
+          value={password}
           placeholder="Password.."
           onChange={(e) => setPassword(e.target.value)}
+        />
+        <Input
+          value={rePassword}
+          label="Confirm Password"
+          type="password"
+          placeholder="Please re-enter the password"
+          onChange={(e) => setRePassword(e.target.value)}
         />
         <Text color={TextColor.Danger}>{error}</Text>
         <div className={styles["btn-group"]}>
           <Button
-            label="Sign in"
+            label="Create account"
             type={ButtonType.Primary}
-            onClick={signIn}
-            loading={loading}
+            onClick={signUp}
           />
         </div>
         <Text>You can also try the following options </Text>
         <div className={styles["secondary-action-group"]}>
           <Button
-            label={<Text underline>Sign Up</Text>}
+            label={<Text underline>Sign in</Text>}
             type={ButtonType.Tertiary}
-            onClick={signUp}
+            onClick={() => router.navigate(`/${app_id}/login`)}
           />
           <Button
             label={<Text underline>Reset password</Text>}
@@ -108,7 +127,7 @@ const LoginPage = () => {
           />
         </div>
         <Text>
-          By Signing in you agree to our{" "}
+          By Signing up you agree to our{" "}
           <Text color={TextColor.Info} underline>
             <a href="">terms and conditions</a>
           </Text>
@@ -118,4 +137,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterationPage;

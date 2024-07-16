@@ -1,10 +1,10 @@
 import { IAMService } from "@/services";
 import { Header } from "@ginger-society/ginger-ui";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 const Home = () => {
   const fetchStatus = async () => {
-    const data = await IAMService.identityValidateToken();
+    const data = await IAMService.routesIndex();
     console.log(data);
   };
   useEffect(() => {
