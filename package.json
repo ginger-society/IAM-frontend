@@ -1,5 +1,5 @@
 {
-  "name": "ReactApp",
+  "name": "@ginger-society/iam-frontend-users",
   "version": "0.0.0",
   "private": true,
   "type": "module",

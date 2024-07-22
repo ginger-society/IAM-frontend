@@ -4,3 +4,6 @@ repo = "ginger-society/metadata-repo"
 
 [services.IAMService]
 dev = "http://localhost:8080"
+
+[urls]
+dev = "http://localhost:3001"
