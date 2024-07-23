@@ -1,6 +1,6 @@
 dir = "src/services"
 lang = "TS"
-repo = "ginger-society/metadata-repo"
+service_type = "Portal"
 
 [services.IAMService]
 dev = "http://localhost:8080"
