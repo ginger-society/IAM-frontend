@@ -1,22 +1,4 @@
 {
-  "name": "@ginger-society/iam-frontend-users",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test": "jest",
-    "test:watch": "yarn test --watch",
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "yarn lint --fix",
-    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "prepare": "husky install",
-    "update-deps": "node ./src/config/update-deps.mjs",
-    "book": "ginger-book serve",
-    "build-book": "ginger-book build"
-  },
   "dependencies": {
     "@ginger-society/ginger-ui": "^0.26.0",
     "@vitejs/plugin-react": "4.2.1",
@@ -76,7 +58,25 @@
       "public"
     ]
   },
+  "name": "@ginger-society/iam-frontend-users",
   "overrides": {
     "graphql": "16.7.1"
-  }
+  },
+  "private": true,
+  "scripts": {
+    "book": "ginger-book serve",
+    "build": "tsc && vite build",
+    "build-book": "ginger-book build",
+    "dev": "vite",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "yarn lint --fix",
+    "prepare": "husky install",
+    "preview": "vite preview",
+    "test": "jest",
+    "test:watch": "yarn test --watch",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "update-deps": "node ./src/config/update-deps.mjs"
+  },
+  "type": "module",
+  "version": "0.2.0-nightly.0"
 }
