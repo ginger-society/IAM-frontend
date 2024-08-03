@@ -75,7 +75,7 @@ const LoginPage = () => {
     <div className={styles["page-container"]}>
       <div className={styles["form-container"]}>
         <div className={styles["app-details-container"]}>
-          <img width={200} src={appData?.logoUrl} />
+          {appData?.logoUrl && <img width={200} src={appData?.logoUrl} />}
           <Text size={TextSize.Large}>{appData?.name}</Text>
         </div>
         <Input label="Email" onChange={(e) => setEmail(e.target.value)} />
