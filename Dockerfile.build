@@ -29,6 +29,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 RUN unzip awscliv2.zip
 RUN ./aws/install
 
+RUN curl "https://ginger-connector-binaries.s3.ap-south-1.amazonaws.com/aarch64-unknown-linux-gnu/ginger-connector" -o "ginger-connector"
+
 # Verify OpenAPI Generator installation
 RUN openapi-generator-cli version
 
@@ -46,7 +48,6 @@ ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 ENV AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 ENV DISTRIBUTION_ID=$DISTRIBUTION_ID
-
 # Run the ginger-connector.debian commands
 RUN ./ginger-connector refer stage
 RUN ./ginger-connector connect stage
@@ -57,6 +58,6 @@ RUN yarn
 # Build the project
 RUN yarn build
 
-RUN aws s3 cp dist/ s3://dev-portal-fe-staging/ --recursive
+RUN aws s3 cp dist/ s3://iam-fe-staging/ --recursive
 
 RUN aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
