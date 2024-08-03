@@ -6,3 +6,4 @@ dist-ssr
 coverage
 tsconfig.tsbuildinfo
 src/services
+.ginger.tmp

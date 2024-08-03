@@ -3,7 +3,9 @@ lang = "TS"
 service_type = "Portal"
 
 [services.IAMService]
-dev = "http://localhost:8080"
+stage = "https://api-staging.gingersociety.org/iam"
+stage_k8 = "http://iam-service-api-service/iam"
 
 [urls]
 dev = "http://localhost:3001"
+stage = "https://iam-staging.gingersociety.org"
