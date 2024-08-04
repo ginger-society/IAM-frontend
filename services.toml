@@ -1,5 +1,6 @@
 dir = "src/services"
 lang = "TS"
+portal_refs_file = "src/shared/references.ts"
 service_type = "Portal"
 
 [services.IAMService]

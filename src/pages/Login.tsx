@@ -14,6 +14,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { IAMService } from "@/services";
 import { AppResponse } from "@/services/IAMService_client";
+import { ENV_KEY } from "@/shared/references";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -64,7 +65,14 @@ const LoginPage = () => {
 
     setLoading(false);
 
-    window.location.href = `${appData?.appUrl}/#/handle-auth/${tokens.accessToken}/${tokens.refreshToken}`;
+    const returnUrls = {
+      dev: appData?.appUrlDev,
+      stage: appData?.appUrlStage,
+      prod: appData?.appUrlProd,
+    };
+    console.log(returnUrls.dev, returnUrls.stage, returnUrls.prod);
+
+    window.location.href = `${returnUrls[ENV_KEY]}/#/handle-auth/${tokens.accessToken}/${tokens.refreshToken}`;
   };
 
   const resetPassword = () => {

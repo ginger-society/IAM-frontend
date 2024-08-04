@@ -7,3 +7,4 @@ coverage
 tsconfig.tsbuildinfo
 src/services
 .ginger.tmp
+src/shared/references.ts
