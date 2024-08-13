@@ -7,6 +7,8 @@ service_type = "Portal"
 stage = "https://api-staging.gingersociety.org/iam"
 stage_k8 = "http://iam-service-api-service/iam"
 
+[portals_refs]
+
 [urls]
 dev = "http://localhost:3001"
 stage = "https://iam-staging.gingersociety.org"

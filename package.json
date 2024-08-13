@@ -59,6 +59,7 @@
     ]
   },
   "name": "@ginger-society/iam-frontend-users",
+  "description": "IAM frontend",
   "overrides": {
     "graphql": "16.7.1"
   },
