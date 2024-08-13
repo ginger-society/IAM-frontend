@@ -31,6 +31,7 @@
     "vite-plugin-svgr": "4.2.0",
     "vite-tsconfig-paths": "4.3.2"
   },
+  "description": "IAM frontend",
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.0.0",
@@ -59,7 +60,6 @@
     ]
   },
   "name": "@ginger-society/iam-frontend-users",
-  "description": "IAM frontend",
   "overrides": {
     "graphql": "16.7.1"
   },
@@ -79,5 +79,5 @@
     "update-deps": "node ./src/config/update-deps.mjs"
   },
   "type": "module",
-  "version": "0.2.0-nightly.0"
+  "version": "0.3.0-nightly.0"
 }
