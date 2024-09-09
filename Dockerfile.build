@@ -19,6 +19,7 @@ ENV DISTRIBUTION_ID=$DISTRIBUTION_ID
 RUN ginger-auth token-login ${GINGER_TOKEN}
 RUN ginger-connector refer stage
 RUN ginger-connector connect stage
+RUN ginger-connector update-pipeline stage running
 
 # Install dependencies
 RUN yarn
@@ -29,3 +30,4 @@ RUN yarn build
 RUN aws s3 cp dist/ s3://iam-fe-staging/ --recursive
 
 RUN aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
+RUN ginger-connector update-pipeline stage passing
