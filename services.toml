@@ -1,15 +1,16 @@
-lang = "TS"
 dir = "src/services"
+lang = "TS"
+organization_id = "ginger-society"
 portal_refs_file = "src/shared/references.ts"
 service_type = "Portal"
 
 [services."@ginger-society/IAMService"]
+dev = "http://localhost:8080/iam"
 stage = "https://api-staging.gingersociety.org/iam"
 stage_k8 = "http://iam-service-api-service/iam"
-dev = "http://localhost:8080/iam"
 
 [portals_refs]
 
 [urls]
-stage = "https://iam-staging.gingersociety.org"
 dev = "http://localhost:3001"
+stage = "https://iam-staging.gingersociety.org"
