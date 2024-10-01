@@ -22,10 +22,10 @@ RUN ginger-connector connect stage
 RUN ginger-connector update-pipeline stage running
 
 # Install dependencies
-RUN yarn
+RUN pnpm i
 
 # Build the project
-RUN yarn build
+RUN pnpm build
 
 RUN aws s3 cp dist/ s3://iam-fe-staging/ --recursive
 
