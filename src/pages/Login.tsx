@@ -72,7 +72,7 @@ const LoginPage = () => {
     };
     console.log(returnUrls.dev, returnUrls.stage, returnUrls.prod);
 
-    window.location.href = `${returnUrls[ENV_KEY]}/#/handle-auth/${tokens.accessToken}/${tokens.refreshToken}`;
+    window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}`;
   };
 
   const resetPassword = () => {
