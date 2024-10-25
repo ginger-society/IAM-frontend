@@ -45,7 +45,7 @@ const RegisterationPage = () => {
       }
     };
     fetchAppData();
-  }, [app_id]);
+  }, [app_id, show]);
 
   const signUp = async () => {
     if (password !== rePassword) {
