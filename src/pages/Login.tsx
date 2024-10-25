@@ -118,7 +118,9 @@ const LoginPage = () => {
         <Text>
           By Signing in you agree to our{" "}
           <Text color={TextColor.Info} underline>
-            <a href="">terms and conditions</a>
+            <a href={appData?.tncLink} target="_blank">
+              Terms of use
+            </a>
           </Text>
         </Text>
       </div>
