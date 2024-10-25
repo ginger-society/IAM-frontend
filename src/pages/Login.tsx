@@ -104,11 +104,13 @@ const LoginPage = () => {
         </div>
         <Text>You can also try the following options </Text>
         <div className={styles["secondary-action-group"]}>
-          <Button
-            label={<Text underline>Sign Up</Text>}
-            type={ButtonType.Tertiary}
-            onClick={signUp}
-          />
+          {appData?.allowRegistration && (
+            <Button
+              label={<Text underline>Sign Up</Text>}
+              type={ButtonType.Tertiary}
+              onClick={signUp}
+            />
+          )}
           <Button
             label={<Text underline>Reset password</Text>}
             type={ButtonType.Tertiary}

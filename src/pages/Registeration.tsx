@@ -34,7 +34,13 @@ const RegisterationPage = () => {
         const app_data = await IAMService.identityGetAppByClientId({
           clientId: app_id,
         });
-
+        if (!app_data.allowRegistration) {
+          show(
+            "This app does not allow registration , Navigating to login!. Please contact your admin if you need access and you dont have it",
+            SnackbarTimer.Long
+          );
+          router.navigate(`/${app_id}/login`);
+        }
         setAppData(app_data);
       }
     };
