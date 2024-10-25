@@ -126,14 +126,16 @@ const RegisterationPage = () => {
             onClick={resetPassword}
           />
         </div>
-        <Text>
-          By Signing up you agree to our{" "}
-          <Text color={TextColor.Info} underline>
-            <a href={appData?.tncLink} target="_blank">
-              Terms of use
-            </a>
+        {appData?.tncLink && (
+          <Text>
+            By Signing up you agree to our{" "}
+            <Text color={TextColor.Info} underline>
+              <a href={appData?.tncLink} target="_blank">
+                Terms of use
+              </a>
+            </Text>
           </Text>
-        </Text>
+        )}
       </div>
     </div>
   );
