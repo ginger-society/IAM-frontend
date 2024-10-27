@@ -52,20 +52,24 @@ const RegisterationPage = () => {
       setError("Passwords do not match");
       return;
     }
+    if (!app_id) {
+      return;
+    }
     try {
       await IAMService.identityRegister({
         registerRequest: {
           email,
           password,
+          appId: app_id,
         },
       });
       setEmail("");
       setPassword("");
       setRePassword("");
-      show("Account created successfully , Please login", SnackbarTimer.Medium);
-      setTimeout(() => {
-        router.navigate(`/${app_id}/login`);
-      }, SnackbarTimer.Medium);
+      show(
+        "Account creation request generated successfully , Please open the email we sent and click to verify your identity",
+        SnackbarTimer.Long
+      );
     } catch (err) {
       setError("Registration failed");
     }

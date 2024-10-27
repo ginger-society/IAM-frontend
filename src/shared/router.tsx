@@ -6,6 +6,7 @@ import LoginPage from "@/pages/Login";
 import RegisterationPage from "@/pages/Registeration";
 import ResetPasswordPage from "@/pages/ResetPassword";
 import RequestPasswordResetPage from "@/pages/RequestPasswordReset";
+import ConfirmRegistrationPage from "@/pages/ConfirmRegistration";
 
 const AuthenticatedHome = withAuthHOC(Home);
 
@@ -33,6 +34,10 @@ const router = createHashRouter([
   {
     path: "/:app_id/request-password-link",
     element: <RequestPasswordResetPage />,
+  },
+  {
+    path: "/:app_id/registration-confirmation/:registration_token",
+    element: <ConfirmRegistrationPage />,
   },
 ]);
 
