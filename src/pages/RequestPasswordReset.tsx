@@ -29,10 +29,17 @@ const RequestPasswordResetPage = () => {
       setError("Email is needed!. Where else I will get to know who you are?");
       return;
     }
+    if (!app_id) {
+      setError(
+        "There is something wrong with the URL you used. Can you please check again the source"
+      );
+
+      return;
+    }
 
     try {
       await IAMService.identityRequestPasswordReset({
-        requestPasswordRequest: { emailId: email },
+        requestPasswordRequest: { emailId: email, appId: app_id },
       });
 
       show(
