@@ -5,7 +5,7 @@ import "./index.css";
 
 import { AuthProvider } from "./shared/AuthContext";
 import router from "./shared/router";
-import { SnackbarProvider } from "@ginger-society/ginger-ui";
+import { SnackbarProvider , SystemThemePreferred} from "@ginger-society/ginger-ui";
 
 const rootElement = document.querySelector('[data-js="root"]') as HTMLElement;
 
@@ -17,7 +17,9 @@ const root = createRoot(rootElement);
 root.render(
   <AuthProvider>
     <SnackbarProvider>
-      <RouterProvider router={router} />
+      <SystemThemePreferred> 
+        <RouterProvider router={router} />
+      </SystemThemePreferred>
     </SnackbarProvider>
   </AuthProvider>
 );
