@@ -140,7 +140,7 @@ const RegisterationPage = () => {
           <Text>
             By Signing up you agree to our{" "}
             <Text color={TextColor.Info} underline>
-              <a href={appData?.tncLink} target="_blank">
+              <a href={appData?.tncLink} style={{ color: 'var(--info-color)' }} target="_blank">
                 Terms of use
               </a>
             </Text>
