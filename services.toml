@@ -1,7 +1,7 @@
 dir = "src/services"
 lang = "TS"
 organization_id = "ginger-society"
-portal_refs_file = "src/shared/references.ts"
+refs_file = "src/shared/references.ts"
 service_type = "Portal"
 
 [services."@ginger-society/IAMService"]
