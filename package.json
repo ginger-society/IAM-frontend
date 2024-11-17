@@ -34,7 +34,6 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.0.0",
-    "@ginger-society/ginger-book": "^4.0.10",
     "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "15.0.2",
     "@types/jest": "29.5.12",
@@ -58,9 +57,7 @@
   },
   "private": true,
   "scripts": {
-    "book": "ginger-book serve",
     "build": "tsc && vite build",
-    "build-book": "ginger-book build",
     "dev": "vite",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "yarn lint --fix",
