@@ -50,13 +50,7 @@
     "jest": "29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-runner-eslint": "2.2.0",
-    "msw": "^2.2.13",
     "typescript-eslint": "^7.7.0"
-  },
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
   },
   "name": "@ginger-society/iam-frontend-users",
   "overrides": {
