@@ -1,5 +1,5 @@
 import { createHashRouter } from "react-router-dom";
-import { withAuthHOC } from "./WithAuthHOC";
+import { withAuthHOC } from "@ginger-society/ginger-ui";
 import Home from "@/pages/Home";
 import IndexPage from "@/pages/Index";
 import LoginPage from "@/pages/Login";

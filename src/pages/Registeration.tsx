@@ -1,4 +1,3 @@
-import { AuthContext } from "@/shared/AuthContext";
 import router from "@/shared/router";
 import {
   Button,
@@ -9,6 +8,7 @@ import {
   TextColor,
   useSnackbar,
   SnackbarTimer,
+  AuthContext
 } from "@ginger-society/ginger-ui";
 import styles from "./login.module.scss";
 
