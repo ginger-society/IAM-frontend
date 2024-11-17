@@ -14,3 +14,5 @@ stage_k8 = "http://iam-service-api-service/iam"
 [urls]
 dev = "http://localhost:3001"
 stage = "https://iam-staging.gingersociety.org"
+
+[urls_ws]
