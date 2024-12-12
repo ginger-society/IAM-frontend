@@ -24,8 +24,9 @@ root.render(
   <AuthProvider<ValidateTokenResponse>
     validateToken={validateToken}
     navigateToLogin={() => {
-      console.log("going to login")
-      router.navigate("/login")
+      if (!router.state.location.pathname.endsWith('/login')) {
+        router.navigate("/login")
+      }
     }
     }
     postLoginNavigate={() =>
