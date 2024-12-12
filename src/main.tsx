@@ -4,7 +4,7 @@ import "../node_modules/@ginger-society/ginger-ui/dist/esm/index.css";
 import "./index.css";
 
 import router from "./shared/router";
-import { SnackbarProvider , SystemThemePreferred, AuthProvider} from "@ginger-society/ginger-ui";
+import { SnackbarProvider, SystemThemePreferred, AuthProvider } from "@ginger-society/ginger-ui";
 import { ValidateTokenResponse } from "./services/IAMService_client";
 import { IAMService } from "./services";
 
@@ -22,16 +22,18 @@ const validateToken = async (): Promise<ValidateTokenResponse> => {
 const root = createRoot(rootElement);
 root.render(
   <AuthProvider<ValidateTokenResponse>
-      validateToken={validateToken}
-      navigateToLogin={() =>
-        console.error('Todo : WIP , this is supposed to navigate to login for profile setup page , currently there is only one use case , passeword reset , that the user can do using forget password.')
-      }
-      postLoginNavigate={() =>
-        router.navigate("/manage-workspaces")
-      }
-    >
+    validateToken={validateToken}
+    navigateToLogin={() => {
+      console.log("going to login")
+      router.navigate("/login")
+    }
+    }
+    postLoginNavigate={() =>
+      router.navigate("/home")
+    }
+  >
     <SnackbarProvider>
-      <SystemThemePreferred> 
+      <SystemThemePreferred>
         <RouterProvider router={router} />
       </SystemThemePreferred>
     </SnackbarProvider>

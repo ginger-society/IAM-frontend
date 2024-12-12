@@ -1,3 +1,4 @@
+import HeaderContainer from "@/components/organisms/HeaderContainer";
 import { IAMService } from "@/services";
 import { Header } from "@ginger-society/ginger-ui";
 import { useCallback, useEffect } from "react";
@@ -13,12 +14,7 @@ const Home = () => {
 
   return (
     <>
-      <Header
-        brandName="Ginger Society"
-        user={{ name: "Jane Doe", email: "jane.doe@example.com" }}
-        icon={<span>Icon</span>}
-        onLogout={() => alert("Logout clicked")}
-      />
+      <HeaderContainer />
     </>
   );
 };

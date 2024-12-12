@@ -16,13 +16,11 @@ import { useParams } from "react-router-dom";
 import { AppResponse } from "@/services/IAMService_client";
 import { IAMService } from "@/services";
 
-const ResetPasswordPage = () => {
+const AcceptInvite = () => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [error, setError] = useState<string>();
   const { token } = useParams<{ token: string }>();
-  const [appData, setAppData] = useState<AppResponse>();
-  const { app_id } = useParams<{ app_id: string }>();
 
   const { show } = useSnackbar();
 
@@ -41,31 +39,29 @@ const ResetPasswordPage = () => {
     }
 
     try {
-      await IAMService.identityResetPassword({
-        resetPasswordRequest: {
-          token: token,
-          newPassword: password,
+      await IAMService.identityAcceptInvite({
+        invitationToken: token,
+        acceptInviteRequest: {
+          password,
         },
       });
       setPassword("");
       setRePassword("");
       show(
-        "Password updated successfully, You can login now.",
+        "Thank you accepting. Your password has been updated successfully, You can login now.",
         SnackbarTimer.Long
       );
-      router.navigate(`/${app_id}/login`);
+      router.navigate('/login')
     } catch (error) {
-      setError("Unable to update password. Please try again");
+      setError("Unable to accept invite. May be the invitation has expired. Please reach out to your support team");
     }
   };
 
   return (
     <div className={styles["page-container"]}>
       <div className={styles["form-container"]}>
-        <div className={styles["app-details-container"]}>
-          {appData?.logoUrl && <img width={200} src={appData?.logoUrl} />}
-          <Text size={TextSize.Large}>{appData?.name}</Text>
-        </div>
+        <Text size={TextSize.Large}>Invitation</Text>
+        <Text>You have been invited to join our platform. Please create your password. Your username is your emailID </Text>
         <Input
           label="Password"
           type="password"
@@ -81,16 +77,26 @@ const ResetPasswordPage = () => {
           onChange={(e) => setRePassword(e.target.value)}
         />
         <Text color={TextColor.Danger}>{error}</Text>
+
+        <Text>
+          By Accepting this request you agree to our{" "}
+          <Text color={TextColor.Info} underline>
+            <a href={"https://gingersociety.org/terms-of-use"} style={{ color: 'var(--info-color)' }} target="_blank">
+              Terms of use
+            </a>
+          </Text>
+        </Text>
+
         <div className={styles["btn-group"]}>
           <Button
-            label="Update password"
+            label="Accept Invite and Update password"
             type={ButtonType.Primary}
             onClick={updatePassword}
           />
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
-export default ResetPasswordPage;
+export default AcceptInvite;

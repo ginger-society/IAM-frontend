@@ -7,6 +7,7 @@ import RegisterationPage from "@/pages/Registeration";
 import ResetPasswordPage from "@/pages/ResetPassword";
 import RequestPasswordResetPage from "@/pages/RequestPasswordReset";
 import ConfirmRegistrationPage from "@/pages/ConfirmRegistration";
+import AcceptInvite from "@/pages/AcceptInvite";
 
 const AuthenticatedHome = withAuthHOC(Home);
 
@@ -18,6 +19,14 @@ const router = createHashRouter([
   {
     path: "/home",
     element: <AuthenticatedHome />,
+  },
+  {
+    path: "/accept-invite/:token",
+    element: <AcceptInvite />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
   {
     path: "/:app_id/login",

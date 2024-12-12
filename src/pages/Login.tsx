@@ -19,7 +19,7 @@ import { ENV_KEY } from "@/shared/references";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, checkSession } = useContext(AuthContext);
   const [error, setError] = useState<string>();
   const { app_id } = useParams<{ app_id: string }>();
 
@@ -35,6 +35,8 @@ const LoginPage = () => {
         });
 
         setAppData(app_data);
+      } else {
+        setAppData({ name: 'Identity App', allowRegistration: false, logoUrl: 'https://www.gingersociety.org/img/ginger_icon.png' })
       }
     };
     fetchAppData();
@@ -51,9 +53,6 @@ const LoginPage = () => {
   }, [user]);
 
   const signIn = async () => {
-    if (!app_id) {
-      return;
-    }
     setLoading(true);
     const tokens = await IAMService.identityLogin({
       loginRequest: {
@@ -64,15 +63,19 @@ const LoginPage = () => {
     });
 
     setLoading(false);
-
-    const returnUrls = {
-      dev: appData?.appUrlDev,
-      stage: appData?.appUrlStage,
-      prod: appData?.appUrlProd,
-    };
-    console.log(returnUrls.dev, returnUrls.stage, returnUrls.prod);
-
-    window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}`;
+    if (app_id) {
+      const returnUrls = {
+        dev: appData?.appUrlDev,
+        stage: appData?.appUrlStage,
+        prod: appData?.appUrlProd,
+      };
+      window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}`;
+    } else {
+      localStorage.setItem('access_token', tokens.accessToken)
+      localStorage.setItem('refresh_token', tokens.refreshToken)
+      checkSession && checkSession()
+      router.navigate('/home')
+    }
   };
 
   const resetPassword = () => {
