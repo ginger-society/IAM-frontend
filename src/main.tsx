@@ -30,8 +30,6 @@ root.render(
     }
     }
     postLoginNavigate={() => {
-      // here , if its a sso request , generate a new set of refresh token and access key and direct the user to the app
-      console.log(router);
       router.navigate("/home")
     }
     }

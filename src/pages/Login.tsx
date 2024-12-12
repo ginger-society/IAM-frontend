@@ -48,7 +48,22 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user) {
-      router.navigate("/");
+      if (app_id) {
+        const returnUrls = {
+          dev: appData?.appUrlDev,
+          stage: appData?.appUrlStage,
+          prod: appData?.appUrlProd,
+        };
+
+        const accessToken = localStorage.getItem('access_token')
+        const refreshToken = localStorage.getItem('refresh_token')
+        // TODO , generate a new set of token
+        window.location.href = `${returnUrls[ENV_KEY]}${accessToken}/${refreshToken}`;
+      } else {
+        router.navigate("/home");
+      }
+
+
     }
   }, [user]);
 
