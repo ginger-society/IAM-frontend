@@ -1,0 +1,52 @@
+.container {
+  margin-top: 50px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header Input {
+  width: 40%;
+}
+
+.app-grid {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns by default */
+  width: 100%;
+}
+
+.app-container {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  background: var(--primary-bg-color);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.app-container:hover {
+  background: var(--secondary-bg-color);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .app-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on tablets */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .app-grid {
+    grid-template-columns: repeat(1, 1fr); /* 1 column on mobile */
+  }
+}
