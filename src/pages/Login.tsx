@@ -10,7 +10,7 @@ import {
 } from "@ginger-society/ginger-ui";
 import styles from "./login.module.scss";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { IAMService } from "@/services";
 import { AppResponse } from "@/services/IAMService_client";
@@ -46,15 +46,17 @@ const LoginPage = () => {
     router.navigate(`/${app_id}/register`);
   };
 
+  const returnUrls = useMemo(() => {
+    return {
+      dev: appData?.appUrlDev,
+      stage: appData?.appUrlStage,
+      prod: appData?.appUrlProd,
+    }
+  }, [appData])
+
   useEffect(() => {
     if (user) {
       if (app_id) {
-        const returnUrls = {
-          dev: appData?.appUrlDev,
-          stage: appData?.appUrlStage,
-          prod: appData?.appUrlProd,
-        };
-
         const accessToken = localStorage.getItem('access_token')
         const refreshToken = localStorage.getItem('refresh_token')
         // TODO , generate a new set of token
@@ -62,10 +64,8 @@ const LoginPage = () => {
       } else {
         router.navigate("/home");
       }
-
-
     }
-  }, [user]);
+  }, [app_id, returnUrls, user]);
 
   const signIn = async () => {
     setLoading(true);
@@ -79,11 +79,6 @@ const LoginPage = () => {
 
     setLoading(false);
     if (app_id) {
-      const returnUrls = {
-        dev: appData?.appUrlDev,
-        stage: appData?.appUrlStage,
-        prod: appData?.appUrlProd,
-      };
       window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}`;
     } else {
       localStorage.setItem('access_token', tokens.accessToken)
