@@ -12,8 +12,8 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchAccessibleApps = async () => {
-    const apps = await IAMService.identityGetAccessibleApps();
-    setApps(apps);
+    const apps_list = await IAMService.identityGetAccessibleApps();
+    setApps(apps_list.filter(a => a.hasWebInterface));
   };
 
   useEffect(() => {
