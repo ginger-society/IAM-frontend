@@ -19,7 +19,7 @@ import { ENV_KEY } from "@/shared/references";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, checkSession } = useContext(AuthContext);
+  const { user, checkSession, loading: authContextLoading } = useContext(AuthContext);
   const [error, setError] = useState<string>();
   const { app_id } = useParams<{ app_id: string }>();
 
@@ -93,55 +93,58 @@ const LoginPage = () => {
   };
 
   return (
-    <div className={styles["page-container"]}>
-      <div className={styles["form-container"]}>
-        <div className={styles["app-details-container"]}>
-          {appData?.logoUrl && <img width={200} src={appData?.logoUrl} />}
-          <Text size={TextSize.Large}>{appData?.name}</Text>
-        </div>
-        <Input label="Email" onChange={(e) => setEmail(e.target.value)} />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Password.."
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Text color={TextColor.Danger}>{error}</Text>
-        <div className={styles["btn-group"]}>
-          <Button
-            label="Sign in"
-            type={ButtonType.Primary}
-            onClick={signIn}
-            loading={loading}
+    <>
+      {authContextLoading && <Text>Checking session , Please wait...</Text>}
+      {!authContextLoading && <div className={styles["page-container"]}>
+        <div className={styles["form-container"]}>
+          <div className={styles["app-details-container"]}>
+            {appData?.logoUrl && <img width={200} src={appData?.logoUrl} />}
+            <Text size={TextSize.Large}>{appData?.name}</Text>
+          </div>
+          <Input label="Email" onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Password.."
+            onChange={(e) => setPassword(e.target.value)}
           />
-        </div>
-        <Text>You can also try the following options </Text>
-        <div className={styles["secondary-action-group"]}>
-          {appData?.allowRegistration && (
+          <Text color={TextColor.Danger}>{error}</Text>
+          <div className={styles["btn-group"]}>
             <Button
-              label={<Text underline>Sign Up</Text>}
-              type={ButtonType.Tertiary}
-              onClick={signUp}
+              label="Sign in"
+              type={ButtonType.Primary}
+              onClick={signIn}
+              loading={loading}
             />
-          )}
-          <Button
-            label={<Text underline>Reset password</Text>}
-            type={ButtonType.Tertiary}
-            onClick={resetPassword}
-          />
-        </div>
-        {appData?.tncLink && (
-          <Text>
-            By Signing in you agree to our{" "}
-            <Text color={TextColor.Info} underline>
-              <a href={appData?.tncLink} style={{ color: 'var(--info-color)' }} target="_blank">
-                Terms of use
-              </a>
+          </div>
+          <Text>You can also try the following options </Text>
+          <div className={styles["secondary-action-group"]}>
+            {appData?.allowRegistration && (
+              <Button
+                label={<Text underline>Sign Up</Text>}
+                type={ButtonType.Tertiary}
+                onClick={signUp}
+              />
+            )}
+            <Button
+              label={<Text underline>Reset password</Text>}
+              type={ButtonType.Tertiary}
+              onClick={resetPassword}
+            />
+          </div>
+          {appData?.tncLink && (
+            <Text>
+              By Signing in you agree to our{" "}
+              <Text color={TextColor.Info} underline>
+                <a href={appData?.tncLink} style={{ color: 'var(--info-color)' }} target="_blank">
+                  Terms of use
+                </a>
+              </Text>
             </Text>
-          </Text>
-        )}
-      </div>
-    </div>
+          )}
+        </div>
+      </div>}
+    </>
   );
 };
 
