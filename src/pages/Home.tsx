@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import styles from './home.module.scss';
 import { AccessibleApp, AppResponse } from "@/services/IAMService_client";
 import { ENV_KEY } from "@/shared/references";
+import { ENV_KEY_TYPE } from "@/shared/types";
 
 const Home = () => {
   const [apps, setApps] = useState<AccessibleApp[]>([]);
@@ -21,9 +22,9 @@ const Home = () => {
 
   const openApp = (app: AppResponse) => {
     let urlToOpen;
-    if (ENV_KEY === 'dev') {
+    if (ENV_KEY as ENV_KEY_TYPE === 'dev') {
       urlToOpen = app.appUrlDev;
-    } else if (ENV_KEY === 'stage') {
+    } else if (ENV_KEY as ENV_KEY_TYPE === 'stage') {
       urlToOpen = app.appUrlStage;
     } else {
       urlToOpen = app.appUrlProd;

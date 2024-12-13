@@ -1,0 +1,1 @@
+export type ENV_KEY_TYPE = 'dev' | 'stage' | 'prod';
