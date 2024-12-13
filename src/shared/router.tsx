@@ -8,6 +8,7 @@ import ResetPasswordPage from "@/pages/ResetPassword";
 import RequestPasswordResetPage from "@/pages/RequestPasswordReset";
 import ConfirmRegistrationPage from "@/pages/ConfirmRegistration";
 import AcceptInvite from "@/pages/AcceptInvite";
+import LogoutPage from "@/pages/Logout";
 
 const AuthenticatedHome = withAuthHOC(Home);
 
@@ -31,6 +32,10 @@ const router = createHashRouter([
   {
     path: "/:app_id/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/:app_id/logout",
+    element: <LogoutPage />,
   },
   {
     path: "/:app_id/register/",
