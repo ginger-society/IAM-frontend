@@ -19,7 +19,7 @@ import { ENV_KEY } from "@/shared/references";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, checkSession, loading: authContextLoading } = useContext(AuthContext);
+  const { user, checkSession, loading: authContextLoading, isAuthenticated } = useContext(AuthContext);
   const [error, setError] = useState<string>();
   const { app_id } = useParams<{ app_id: string }>();
 
@@ -95,7 +95,8 @@ const LoginPage = () => {
   return (
     <>
       {authContextLoading && <Text>Checking session , Please wait...</Text>}
-      {!authContextLoading && <div className={styles["page-container"]}>
+      {!authContextLoading && isAuthenticated && <Text>Session is valid, Taking you back to the app</Text>}
+      {!authContextLoading && !isAuthenticated && <div className={styles["page-container"]}>
         <div className={styles["form-container"]}>
           <div className={styles["app-details-container"]}>
             {appData?.logoUrl && <img width={200} src={appData?.logoUrl} />}
