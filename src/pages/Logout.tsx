@@ -8,7 +8,7 @@ const LogoutPage = () => {
   useEffect(() => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    router.navigate(`${app_id}/login`)
+    router.navigate(`/${app_id}/login`)
   }, [app_id])
 
   return <>Clearing session. Please wait</>
