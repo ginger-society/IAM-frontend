@@ -7,7 +7,6 @@ import { AuthContext } from "@ginger-society/ginger-ui";
 
 const LogoutPage = () => {
   const { app_id } = useParams<{ app_id: string }>()
-  const { checkSession } = useContext(AuthContext);
 
   const invalidateTokens = useCallback(async () => {
     const refreshToken = localStorage.getItem('refresh_token');
@@ -16,9 +15,8 @@ const LogoutPage = () => {
     }
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    checkSession && checkSession();
     router.navigate(`/${app_id}/login`)
-  }, [app_id, checkSession])
+  }, [app_id])
 
   useEffect(() => {
     invalidateTokens();
