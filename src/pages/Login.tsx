@@ -48,9 +48,9 @@ const LoginPage = () => {
 
   const returnUrls = useMemo(() => {
     return {
-      dev: appData?.appUrlDev,
-      stage: appData?.appUrlStage,
-      prod: appData?.appUrlProd,
+      dev: `${appData?.appUrlDev}${appData?.redirectionPath}`,
+      stage: `${appData?.appUrlStage}${appData?.redirectionPath}`,
+      prod: `${appData?.appUrlProd}${appData?.redirectionPath}`,
     }
   }, [appData])
 
