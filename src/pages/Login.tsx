@@ -82,10 +82,16 @@ const LoginPage = () => {
 
     setLoading(false);
     if (app_id) {
-      window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}`;
+
+      localStorage.setItem('access_token', tokens.iamTokens.accessToken)
+      localStorage.setItem('refresh_token', tokens.iamTokens.refreshToken)
+      if (tokens.appTokens) {
+        window.location.href = `${returnUrls[ENV_KEY]}${tokens.appTokens.accessToken}/${tokens.appTokens.refreshToken}`;
+      }
+
     } else {
-      localStorage.setItem('access_token', tokens.accessToken)
-      localStorage.setItem('refresh_token', tokens.refreshToken)
+      localStorage.setItem('access_token', tokens.iamTokens.accessToken)
+      localStorage.setItem('refresh_token', tokens.iamTokens.refreshToken)
       checkSession && checkSession()
       router.navigate('/home')
     }
