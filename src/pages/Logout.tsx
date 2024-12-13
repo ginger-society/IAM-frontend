@@ -18,7 +18,7 @@ const LogoutPage = () => {
     localStorage.removeItem('refresh_token');
     checkSession && checkSession();
     router.navigate(`/${app_id}/login`)
-  }, [app_id])
+  }, [app_id, checkSession])
 
   useEffect(() => {
     invalidateTokens();
