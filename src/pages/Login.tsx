@@ -10,7 +10,7 @@ import {
 } from "@ginger-society/ginger-ui";
 import styles from "./login.module.scss";
 
-import { useState, useEffect, useContext, useMemo } from "react";
+import { useState, useEffect, useContext, useMemo, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { IAMService } from "@/services";
 import { AppResponse } from "@/services/IAMService_client";
@@ -54,18 +54,21 @@ const LoginPage = () => {
     }
   }, [appData])
 
+  const getTokenAndRedirect = useCallback(async (appId: string) => {
+
+    const tokens = await IAMService.identityGenerateAppTokens({ appId })
+    window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}`;
+  }, [returnUrls])
+
   useEffect(() => {
     if (user) {
       if (app_id) {
-        const accessToken = localStorage.getItem('access_token')
-        const refreshToken = localStorage.getItem('refresh_token')
-        // TODO , generate a new set of token
-        window.location.href = `${returnUrls[ENV_KEY]}${accessToken}/${refreshToken}`;
+        getTokenAndRedirect(app_id)
       } else {
         router.navigate("/home");
       }
     }
-  }, [app_id, returnUrls, user]);
+  }, [app_id, returnUrls, user, getTokenAndRedirect]);
 
   const signIn = async () => {
     setLoading(true);
