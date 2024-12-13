@@ -40,7 +40,8 @@ const LoginPage = () => {
       }
     };
     fetchAppData();
-  }, [app_id]);
+    checkSession && checkSession();
+  }, [app_id, checkSession]);
 
   const signUp = async () => {
     router.navigate(`/${app_id}/register`);
