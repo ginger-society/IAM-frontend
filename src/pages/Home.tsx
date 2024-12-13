@@ -5,72 +5,6 @@ import { useEffect, useState } from "react";
 import styles from './home.module.scss';
 import { AccessibleApp } from "@/services/IAMService_client";
 
-const initialData = {
-  total_count: 6,
-  data: [
-    {
-      client_id: "metadata-db-runtime",
-      name: "Metadata DB Studio",
-      logo_url: "https://www.gingersociety.org/img/ginger-db.png",
-      disabled: false,
-      group_id: 44,
-      tnc_link: null,
-      allow_registration: false,
-      id: 3
-    },
-    {
-      client_id: "iam-db-runtime",
-      name: "IAM DB Studio",
-      logo_url: "https://www.gingersociety.org/img/ginger-db.png",
-      disabled: false,
-      group_id: 43,
-      tnc_link: null,
-      allow_registration: false,
-      id: 4
-    },
-    {
-      client_id: "iam-admin-staging",
-      name: "IAM Admin",
-      logo_url: "https://www.gingersociety.org/img/ginger_icon.png",
-      disabled: false,
-      group_id: null,
-      tnc_link: null,
-      allow_registration: false,
-      id: 6
-    },
-    {
-      client_id: "dev-portal-staging",
-      name: "Dev Portal",
-      logo_url: "https://www.gingersociety.org/img/ginger-dev-portal-icon.png",
-      disabled: false,
-      group_id: null,
-      tnc_link: "https://www.gingersociety.org/terms-of-use/",
-      allow_registration: true,
-      id: 1
-    },
-    {
-      client_id: "dev-machine",
-      name: "Developer's machine",
-      logo_url: null,
-      disabled: false,
-      group_id: null,
-      tnc_link: null,
-      allow_registration: false,
-      id: 2
-    },
-    {
-      client_id: "db-compose-test-env",
-      name: "DB Compose Test Env",
-      logo_url: "https://www.gingersociety.org/img/ginger_icon.png",
-      disabled: false,
-      group_id: null,
-      tnc_link: null,
-      allow_registration: false,
-      id: 5
-    }
-  ]
-};
-
 const Home = () => {
   const [apps, setApps] = useState<AccessibleApp[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -94,11 +28,12 @@ const Home = () => {
             <Input
               placeholder="Search..."
               value={searchQuery}
+              onChange={({ target: { value } }) => setSearchQuery(value)}
             />
           </div>
         </div>
         <div className={styles['app-grid']}>
-          {apps.map((app, index) => (
+          {apps.filter((a) => a.name.toLowerCase().includes(searchQuery)).map((app, index) => (
             <div key={index} className={styles['app-container']}>
               <img src={app.logoUrl || "https://www.gingersociety.org/img/ginger_icon.png"} width="100" alt={app.name} />
               <div>
