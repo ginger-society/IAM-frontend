@@ -3,7 +3,8 @@ import { IAMService } from "@/services";
 import { Text, TextSize, Input } from "@ginger-society/ginger-ui";
 import { useEffect, useState } from "react";
 import styles from './home.module.scss';
-import { AccessibleApp } from "@/services/IAMService_client";
+import { AccessibleApp, AppResponse } from "@/services/IAMService_client";
+import { ENV_KEY } from "@/shared/references";
 
 const Home = () => {
   const [apps, setApps] = useState<AccessibleApp[]>([]);
@@ -17,6 +18,20 @@ const Home = () => {
   useEffect(() => {
     fetchAccessibleApps();
   }, []);
+
+  const openApp = (app: AppResponse) => {
+    let urlToOpen;
+    if (ENV_KEY === 'dev') {
+      urlToOpen = app.appUrlDev;
+    } else if (ENV_KEY === 'stage') {
+      urlToOpen = app.appUrlStage;
+    } else {
+      urlToOpen = app.appUrlProd;
+    }
+    if (urlToOpen) {
+      window.open(urlToOpen, '_blank');
+    }
+  }
 
   return (
     <>
@@ -34,11 +49,11 @@ const Home = () => {
         </div>
         <div className={styles['app-grid']}>
           {apps.filter((a) => a.name.toLowerCase().includes(searchQuery)).map((app, index) => (
-            <div key={index} className={styles['app-container']}>
+            <div onClick={() => openApp(app)} key={index} className={styles['app-container']}>
               <img src={app.logoUrl || "https://www.gingersociety.org/img/ginger_icon.png"} width="100" alt={app.name} />
               <div>
                 <Text size={TextSize.Large}>{app.name}</Text> <br />
-                <Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, possimus facere sit volu?</Text>
+                <Text>{app.description}</Text>
               </div>
             </div>
           ))}
