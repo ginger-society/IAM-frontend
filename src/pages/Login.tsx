@@ -58,7 +58,7 @@ const LoginPage = () => {
   const getTokenAndRedirect = useCallback(async (appId: string) => {
 
     const tokens = await IAMService.identityGenerateAppTokens({ appId })
-    window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}`;
+    window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}${router.state.location.search}`;
   }, [returnUrls])
 
   useEffect(() => {
@@ -87,7 +87,7 @@ const LoginPage = () => {
       localStorage.setItem('access_token', tokens.iamTokens.accessToken)
       localStorage.setItem('refresh_token', tokens.iamTokens.refreshToken)
       if (tokens.appTokens) {
-        window.location.href = `${returnUrls[ENV_KEY]}${tokens.appTokens.accessToken}/${tokens.appTokens.refreshToken}`;
+        window.location.href = `${returnUrls[ENV_KEY]}${tokens.appTokens.accessToken}/${tokens.appTokens.refreshToken}${router.state.location.search}`;
       }
 
     } else {

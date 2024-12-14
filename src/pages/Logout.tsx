@@ -1,8 +1,7 @@
 import { IAMService } from "@/services";
 import router from "@/shared/router";
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "@ginger-society/ginger-ui";
 
 
 const LogoutPage = () => {
