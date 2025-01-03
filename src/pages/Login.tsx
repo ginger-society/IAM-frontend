@@ -24,6 +24,7 @@ const LoginPage = () => {
   const { app_id } = useParams<{ app_id: string }>();
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>();
 
   const [appData, setAppData] = useState<AppResponse>();
 
@@ -56,9 +57,13 @@ const LoginPage = () => {
   }, [appData])
 
   const getTokenAndRedirect = useCallback(async (appId: string) => {
+    try {
+      const tokens = await IAMService.identityGenerateAppTokens({ appId });
+      window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}${router.state.location.search}`;
+    } catch (error) {
+      setErrorMsg('Access Denied!')
+    }
 
-    const tokens = await IAMService.identityGenerateAppTokens({ appId })
-    window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}${router.state.location.search}`;
   }, [returnUrls])
 
   useEffect(() => {
@@ -105,7 +110,7 @@ const LoginPage = () => {
   return (
     <>
       {authContextLoading && <Text>Checking session , Please wait...</Text>}
-      {!authContextLoading && isAuthenticated && <Text>Session is valid, Taking you back to the app</Text>}
+      {!authContextLoading && isAuthenticated && <Text>Session is valid, Taking you back to the app {errorMsg && ` - Error : ${errorMsg}`}</Text>}
       {!authContextLoading && !isAuthenticated && <div className={styles["page-container"]}>
         <div className={styles["form-container"]}>
           <div className={styles["app-details-container"]}>
