@@ -42,7 +42,10 @@ const LoginPage = () => {
     };
     fetchAppData();
     setErrorMsg('');
-    checkSession && checkSession();
+
+    checkSession && checkSession().then(() => {
+
+    });
   }, [app_id, checkSession]);
 
   const signUp = async () => {
@@ -60,8 +63,6 @@ const LoginPage = () => {
 
 
   useEffect(() => {
-    console.log({ user, isAuthenticated, authContextLoading });
-
     const getTokenAndRedirect = async (appId: string) => {
       if (!user || !isAuthenticated || authContextLoading) {
         setErrorMsg('')
@@ -76,16 +77,18 @@ const LoginPage = () => {
       }
 
     }
+
+
     if (user) {
       if (app_id) {
-        setTimeout(() => {
-          getTokenAndRedirect(app_id)
-        }, 2000)
+        checkSession && checkSession().then(() => {
+          getTokenAndRedirect(app_id);
+        })
       } else {
         router.navigate("/home");
       }
     }
-  }, [app_id, authContextLoading, isAuthenticated, returnUrls, user]);
+  }, [app_id, authContextLoading, checkSession, isAuthenticated, returnUrls, user]);
 
   const signIn = async () => {
     setErrorMsg('')
