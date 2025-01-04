@@ -24,7 +24,7 @@ const LoginPage = () => {
   const { app_id } = useParams<{ app_id: string }>();
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string>();
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
   const [appData, setAppData] = useState<AppResponse>();
 
@@ -41,7 +41,7 @@ const LoginPage = () => {
       }
     };
     fetchAppData();
-    setErrorMsg(undefined);
+    setErrorMsg('');
     checkSession && checkSession();
   }, [app_id, checkSession]);
 
@@ -78,7 +78,7 @@ const LoginPage = () => {
   }, [app_id, returnUrls, user, getTokenAndRedirect]);
 
   const signIn = async () => {
-    setErrorMsg(undefined)
+    setErrorMsg('')
     setLoading(true);
     try {
       const tokens = await IAMService.identityLogin({
