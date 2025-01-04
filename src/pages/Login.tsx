@@ -66,7 +66,7 @@ const LoginPage = () => {
       const tokens = await IAMService.identityGenerateAppTokens({ appId });
       window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}${router.state.location.search}`;
     } catch (error) {
-      setErrorMsg('Access Denied!')
+      isAuthenticated && setErrorMsg('Access Denied!')
     }
 
   }, [authContextLoading, isAuthenticated, returnUrls])
