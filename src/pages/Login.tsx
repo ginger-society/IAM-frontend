@@ -57,31 +57,33 @@ const LoginPage = () => {
     }
   }, [appData])
 
-  const getTokenAndRedirect = async (appId: string) => {
-    if (!isAuthenticated || authContextLoading) {
-      setErrorMsg('')
-      return;
-    }
-    try {
 
-      const tokens = await IAMService.identityGenerateAppTokens({ appId });
-      window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}${router.state.location.search}`;
-    } catch (error) {
-      isAuthenticated && setErrorMsg('Access Denied!')
-    }
-
-  }
 
   useEffect(() => {
+    const getTokenAndRedirect = async (appId: string) => {
+      if (!isAuthenticated || authContextLoading) {
+        setErrorMsg('')
+        return;
+      }
+      try {
+
+        const tokens = await IAMService.identityGenerateAppTokens({ appId });
+        window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}${router.state.location.search}`;
+      } catch (error) {
+        isAuthenticated && setErrorMsg('Access Denied!')
+      }
+
+    }
     if (user) {
       if (app_id) {
-        getTokenAndRedirect(app_id)
+        setTimeout(() => {
+          getTokenAndRedirect(app_id)
+        }, 0)
       } else {
         router.navigate("/home");
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [app_id, returnUrls, user]);
+  }, [app_id, authContextLoading, isAuthenticated, returnUrls, user]);
 
   const signIn = async () => {
     setErrorMsg('')
