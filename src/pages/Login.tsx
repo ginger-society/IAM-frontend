@@ -80,7 +80,7 @@ const LoginPage = () => {
       if (app_id) {
         setTimeout(() => {
           getTokenAndRedirect(app_id)
-        }, 0)
+        }, 2000)
       } else {
         router.navigate("/home");
       }
