@@ -57,9 +57,8 @@ const LoginPage = () => {
     }
   }, [appData])
 
-  const getTokenAndRedirect = useCallback(async (appId: string) => {
+  const getTokenAndRedirect = async (appId: string) => {
     if (!isAuthenticated || authContextLoading) {
-      setErrorMsg('')
       return;
     }
     try {
@@ -70,7 +69,7 @@ const LoginPage = () => {
       isAuthenticated && setErrorMsg('Access Denied!')
     }
 
-  }, [authContextLoading, isAuthenticated, returnUrls])
+  }
 
   useEffect(() => {
     if (user) {
@@ -80,7 +79,8 @@ const LoginPage = () => {
         router.navigate("/home");
       }
     }
-  }, [app_id, returnUrls, user, getTokenAndRedirect]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [app_id, returnUrls, user]);
 
   const signIn = async () => {
     setErrorMsg('')
