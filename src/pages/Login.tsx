@@ -63,7 +63,7 @@ const LoginPage = () => {
     console.log({ user, isAuthenticated, authContextLoading });
 
     const getTokenAndRedirect = async (appId: string) => {
-      if (!isAuthenticated || authContextLoading) {
+      if (!user || !isAuthenticated || authContextLoading) {
         setErrorMsg('')
         return;
       }
