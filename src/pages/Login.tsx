@@ -41,6 +41,7 @@ const LoginPage = () => {
       }
     };
     fetchAppData();
+    setErrorMsg(undefined);
     checkSession && checkSession();
   }, [app_id, checkSession]);
 
