@@ -77,6 +77,7 @@ const LoginPage = () => {
   }, [app_id, returnUrls, user, getTokenAndRedirect]);
 
   const signIn = async () => {
+    setErrorMsg(undefined)
     setLoading(true);
     try {
       const tokens = await IAMService.identityLogin({
