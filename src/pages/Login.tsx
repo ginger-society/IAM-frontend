@@ -28,14 +28,6 @@ const LoginPage = () => {
 
   const [appData, setAppData] = useState<AppResponse>();
 
-  const returnUrls = useMemo(() => {
-    return {
-      dev: `${appData?.appUrlDev}${appData?.redirectionPath}`,
-      stage: `${appData?.appUrlStage}${appData?.redirectionPath}`,
-      prod: `${appData?.appUrlProd}${appData?.redirectionPath}`,
-    }
-  }, [appData])
-
   useEffect(() => {
     const fetchAppData = async () => {
       if (app_id) {
@@ -50,18 +42,40 @@ const LoginPage = () => {
     };
     fetchAppData();
     setErrorMsg('');
+    checkSession && checkSession()
+  }, [app_id, checkSession]);
+
+  const signUp = async () => {
+    router.navigate(`/${app_id}/register`);
+  };
+
+  const returnUrls = useMemo(() => {
+    return {
+      dev: `${appData?.appUrlDev}${appData?.redirectionPath}`,
+      stage: `${appData?.appUrlStage}${appData?.redirectionPath}`,
+      prod: `${appData?.appUrlProd}${appData?.redirectionPath}`,
+    }
+  }, [appData])
+
+
+
+  useEffect(() => {
     const getTokenAndRedirect = async (appId: string) => {
+      if (!user || !isAuthenticated || authContextLoading) {
+        setErrorMsg('')
+        return;
+      }
       try {
 
         const tokens = await IAMService.identityGenerateAppTokens({ appId });
         window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}${router.state.location.search}`;
       } catch (error) {
-        setErrorMsg('Access Denied!')
+        isAuthenticated && setErrorMsg('Access Denied!')
       }
 
     }
 
-    if (!authContextLoading && isAuthenticated) {
+    if (user) {
       if (app_id) {
 
         getTokenAndRedirect(app_id);
@@ -70,14 +84,7 @@ const LoginPage = () => {
         router.navigate("/home");
       }
     }
-  }, [app_id, authContextLoading, checkSession, isAuthenticated, returnUrls]);
-
-  const signUp = async () => {
-    router.navigate(`/${app_id}/register`);
-  };
-
-
-
+  }, [app_id, authContextLoading, checkSession, isAuthenticated, returnUrls, user]);
 
   const signIn = async () => {
     setErrorMsg('')
