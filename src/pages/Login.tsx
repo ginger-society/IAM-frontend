@@ -59,6 +59,7 @@ const LoginPage = () => {
 
   const getTokenAndRedirect = useCallback(async (appId: string) => {
     if (!isAuthenticated || authContextLoading) {
+      setErrorMsg('')
       return;
     }
     try {
