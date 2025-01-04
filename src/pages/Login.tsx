@@ -69,7 +69,7 @@ const LoginPage = () => {
       setErrorMsg('Access Denied!')
     }
 
-  }, [isAuthenticated, returnUrls])
+  }, [authContextLoading, isAuthenticated, returnUrls])
 
   useEffect(() => {
     if (user) {
