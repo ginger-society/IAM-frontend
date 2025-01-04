@@ -58,14 +58,18 @@ const LoginPage = () => {
   }, [appData])
 
   const getTokenAndRedirect = useCallback(async (appId: string) => {
+    if (!isAuthenticated) {
+      return;
+    }
     try {
+
       const tokens = await IAMService.identityGenerateAppTokens({ appId });
       window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}${router.state.location.search}`;
     } catch (error) {
       setErrorMsg('Access Denied!')
     }
 
-  }, [returnUrls])
+  }, [isAuthenticated, returnUrls])
 
   useEffect(() => {
     if (user) {
