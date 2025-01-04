@@ -42,10 +42,6 @@ const LoginPage = () => {
     };
     fetchAppData();
     setErrorMsg('');
-
-    checkSession && checkSession().then(() => {
-
-    });
   }, [app_id, checkSession]);
 
   const signUp = async () => {
