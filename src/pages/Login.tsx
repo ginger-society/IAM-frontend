@@ -60,6 +60,8 @@ const LoginPage = () => {
 
 
   useEffect(() => {
+    console.log({ user, isAuthenticated, authContextLoading });
+
     const getTokenAndRedirect = async (appId: string) => {
       if (!isAuthenticated || authContextLoading) {
         setErrorMsg('')
