@@ -78,29 +78,32 @@ const LoginPage = () => {
 
   const signIn = async () => {
     setLoading(true);
-    const tokens = await IAMService.identityLogin({
-      loginRequest: {
-        email: email,
-        password: password,
-        clientId: app_id,
-      },
-    });
+    try {
+      const tokens = await IAMService.identityLogin({
+        loginRequest: {
+          email: email,
+          password: password,
+          clientId: app_id,
+        },
+      });
+      if (app_id) {
 
-    setLoading(false);
-    if (app_id) {
+        localStorage.setItem('access_token', tokens.iamTokens.accessToken)
+        localStorage.setItem('refresh_token', tokens.iamTokens.refreshToken)
+        if (tokens.appTokens) {
+          window.location.href = `${returnUrls[ENV_KEY]}${tokens.appTokens.accessToken}/${tokens.appTokens.refreshToken}${router.state.location.search}`;
+        }
 
-      localStorage.setItem('access_token', tokens.iamTokens.accessToken)
-      localStorage.setItem('refresh_token', tokens.iamTokens.refreshToken)
-      if (tokens.appTokens) {
-        window.location.href = `${returnUrls[ENV_KEY]}${tokens.appTokens.accessToken}/${tokens.appTokens.refreshToken}${router.state.location.search}`;
+      } else {
+        localStorage.setItem('access_token', tokens.iamTokens.accessToken)
+        localStorage.setItem('refresh_token', tokens.iamTokens.refreshToken)
+        checkSession && checkSession()
+        router.navigate('/home')
       }
-
-    } else {
-      localStorage.setItem('access_token', tokens.iamTokens.accessToken)
-      localStorage.setItem('refresh_token', tokens.iamTokens.refreshToken)
-      checkSession && checkSession()
-      router.navigate('/home')
+    } catch (error) {
+      setErrorMsg('Access Denied!')
     }
+    setLoading(false);
   };
 
   const resetPassword = () => {
@@ -132,7 +135,9 @@ const LoginPage = () => {
               onClick={signIn}
               loading={loading}
             />
+            <Text color={TextColor.Danger}>{errorMsg}</Text>
           </div>
+
           <Text>You can also try the following options </Text>
           <div className={styles["secondary-action-group"]}>
             {appData?.allowRegistration && (
