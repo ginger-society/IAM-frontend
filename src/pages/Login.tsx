@@ -61,7 +61,7 @@ const LoginPage = () => {
 
     }
 
-    checkSession && checkSession().then(() => {
+    if (!authContextLoading && isAuthenticated) {
       if (app_id) {
 
         getTokenAndRedirect(app_id);
@@ -69,8 +69,8 @@ const LoginPage = () => {
       } else {
         router.navigate("/home");
       }
-    })
-  }, [app_id, checkSession, returnUrls]);
+    }
+  }, [app_id, authContextLoading, checkSession, isAuthenticated, returnUrls]);
 
   const signUp = async () => {
     router.navigate(`/${app_id}/register`);
