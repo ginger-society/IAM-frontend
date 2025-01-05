@@ -6,6 +6,7 @@ import styles from './home.module.scss';
 import { AccessibleApp, AppResponse } from "@/services/IAMService_client";
 import { ENV_KEY } from "@/shared/references";
 import { ENV_KEY_TYPE } from "@/shared/types";
+import { FaPerbyte } from "react-icons/fa";
 
 const Home = () => {
   const [apps, setApps] = useState<AccessibleApp[]>([]);
@@ -50,12 +51,13 @@ const Home = () => {
         </div>
         <div className={styles['app-grid']}>
           {apps.filter((a) => a.name.toLowerCase().includes(searchQuery)).map((app, index) => (
-            <div onClick={() => openApp(app)} key={index} className={styles['app-container']}>
-              <img src={app.logoUrl || "https://www.gingersociety.org/img/ginger_icon.png"} width="100" alt={app.name} />
+            <div aria-label={app.description} onClick={() => openApp(app)} key={index} className={styles['app-container']}>
+              {app.logoUrl && <img src={app.logoUrl} width="100" alt={app.name} />}
+              {!app.logoUrl && <FaPerbyte color={"var(--primary-color)"} size={90} />}
               <div>
-                <Text size={TextSize.Large}>{app.name}</Text> <br />
-                <Text>{app.description}</Text>
+                <Text size={TextSize.Normal}>{app.name}</Text> <br />
               </div>
+              <span className={styles["tooltip"]}>{app.description}</span>
             </div>
           ))}
         </div>

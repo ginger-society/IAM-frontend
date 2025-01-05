@@ -1,6 +1,6 @@
 .container {
   margin-top: 50px;
-  padding: 50px;
+  padding: 100px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -19,24 +19,46 @@
 .app-grid {
   display: grid;
   gap: 30px;
-  grid-template-columns: repeat(4, 1fr); /* 4 columns by default */
+  grid-template-columns: repeat(5, 1fr); /* 4 columns by default */
   width: 100%;
 }
 
+.tooltip {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px;
+  position: absolute;
+  bottom: 110%; /* Position above the element */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+.app-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
 .app-container {
-  border: 1px solid black;
+  
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   padding: 10px;
   background: var(--primary-bg-color);
   border-radius: 10px;
   transition: background 0.3s ease;
+  border: 1px solid var(--primary-bg-color);
 }
 
 .app-container:hover {
-  background: var(--secondary-bg-color);
+  // background: var(--secondary-bg-color);
   cursor: pointer;
+  border: 1px solid black;
 }
 
 @media screen and (max-width: 1024px) {
