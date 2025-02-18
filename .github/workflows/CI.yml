@@ -52,7 +52,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker buildx build . \
+          docker build . \
             -t ${{ secrets.DOCKER_HUB_USERNAME }}/iam-prod-fe:latest \
             -f Dockerfile.build \
             --build-arg GINGER_TOKEN=${{ secrets.GINGER_TOKEN }} \
