@@ -4,8 +4,6 @@ FROM gingersociety/vite-react-builder:latest AS builder
 # Copy source code
 COPY . .
 
-RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ginger-society/infra-as-code-repo/main/rust-helpers/install-pipeline-clis.sh)"
-
 # Set environment variables using build arguments
 ARG GINGER_TOKEN
 ARG AWS_ACCESS_KEY_ID
