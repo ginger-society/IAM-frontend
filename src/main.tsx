@@ -19,25 +19,44 @@ const validateToken = async (): Promise<ValidateTokenResponse> => {
 };
 
 
-const root = createRoot(rootElement);
-root.render(
-  <AuthProvider<ValidateTokenResponse>
-    validateToken={validateToken}
-    navigateToLogin={() => {
-      if (!router.state.location.pathname.endsWith('/login')) {
-        router.navigate("/login")
+const fetchConfig = async () => {
+  try {
+    const response = await fetch("/config.json");
+    if (!response.ok) throw new Error(`Failed to fetch config: ${response.statusText}`);
+    (window as any).CONFIG = await response.json();
+  } catch (error) {
+    console.error("Error fetching config:", error);
+    (window as any).CONFIG = {};
+  }
+}
+
+
+const init = async () => {
+
+  await fetchConfig();
+  const root = createRoot(rootElement);
+  root.render(
+    <AuthProvider<ValidateTokenResponse>
+      validateToken={validateToken}
+      navigateToLogin={() => {
+        if (!router.state.location.pathname.endsWith('/login')) {
+          router.navigate("/login")
+        }
       }
-    }
-    }
-    postLoginNavigate={() => {
-      router.navigate("/home")
-    }
-    }
-  >
-    <SnackbarProvider>
-      <SystemThemePreferred>
-        <RouterProvider router={router} />
-      </SystemThemePreferred>
-    </SnackbarProvider>
-  </AuthProvider>
-);
+      }
+      postLoginNavigate={() => {
+        router.navigate("/home")
+      }
+      }
+    >
+      <SnackbarProvider>
+        <SystemThemePreferred>
+          <RouterProvider router={router} />
+        </SystemThemePreferred>
+      </SnackbarProvider>
+    </AuthProvider>
+  );
+
+}
+
+init();
