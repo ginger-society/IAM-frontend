@@ -19,18 +19,15 @@ ENV DISTRIBUTION_ID=$DISTRIBUTION_ID
 
 # Authenticate and set up ginger-connector
 RUN ginger-auth token-login ${GINGER_TOKEN}
-RUN ginger-connector refer stage
-RUN ginger-connector connect stage
 
 # Install dependencies
-RUN pnpm i
+ENV HUSKY=0
+RUN pnpm i || pnpm approve-builds --all && pnpm i
 
-# Build the project
-RUN pnpm build
 
 # Upload to S3 and invalidate CloudFront cache
-RUN aws s3 cp dist/ s3://iam-fe-staging/ --recursive
-RUN aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
+# RUN aws s3 cp dist/ s3://iam-fe-staging/ --recursive
+# RUN aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
 
 RUN ginger-connector refer prod
 RUN ginger-connector connect prod
