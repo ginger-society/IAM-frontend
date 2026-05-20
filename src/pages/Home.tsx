@@ -31,7 +31,7 @@ const Home = () => {
       urlToOpen = app.appUrlProd;
     }
     if (urlToOpen) {
-      window.open(urlToOpen, '_blank');
+      window.location.href = urlToOpen;
     }
   }
 

@@ -61,7 +61,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     const getTokenAndRedirect = async (appId: string) => {
-      if (!user || !isAuthenticated || authContextLoading) {
+      if (!user) {
         setErrorMsg('')
         return;
       }
@@ -70,7 +70,7 @@ const LoginPage = () => {
         const tokens = await IAMService.identityGenerateAppTokens({ appId });
         window.location.href = `${returnUrls[ENV_KEY]}${tokens.accessToken}/${tokens.refreshToken}${router.state.location.search}`;
       } catch (error) {
-        isAuthenticated && setErrorMsg('Access Denied!')
+        setErrorMsg('Access Denied!')
       }
 
     }
@@ -84,7 +84,7 @@ const LoginPage = () => {
         router.navigate("/home");
       }
     }
-  }, [app_id, authContextLoading, checkSession, isAuthenticated, returnUrls, user]);
+  }, [app_id, authContextLoading, returnUrls, user]);
 
   const signIn = async () => {
     setErrorMsg('')
